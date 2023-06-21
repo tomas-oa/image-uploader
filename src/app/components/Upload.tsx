@@ -10,11 +10,10 @@ function isImage(file: File): boolean {
 }
 
 export default function Upload () {
-  const [file, setFile] = useState<File | null>(null)
-  const [progress, setProgress] = useState<number>(0)
+  const [file, setFile] = useState<any>(null)
 
   async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
+    const uploadedFile = e.target.files?.[0]
 
     if (!file) {
       alert('No file selected')
@@ -26,29 +25,18 @@ export default function Upload () {
       return
     }
 
-    setFile(file)
-    const { name, type } = file || {}
-    try {
-      const res = await fetch(`/api/upload?file=${name}&fileType=${type}`)
-      const { url } = await res.json()
+    setFile(uploadedFile)
+    const { name } = file || {}
+    const res = await fetch(`/api/upload?file=${name}`)
+    const { url } = await res.json()
   
-      const upload = await fetch(url, {
-        method: 'PUT',
-        body: file,
-        headers: {
-          'Content-Type': type
-        }
-      })
-
-      if (!upload.ok) {
-        throw new Error('Upload failed')
+    await fetch(url, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-
-      const s3url = `https://image-uploader-devchallenges.s3.sa-east-1.amazonaws.com/${name}`
-      console.log(s3url)
-    } catch (err) {
-      console.log(err)
-    }
+    })
   }
 
   function handleDrag (e: React.DragEvent<HTMLLabelElement>) {
