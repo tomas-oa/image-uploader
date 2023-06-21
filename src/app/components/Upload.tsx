@@ -9,11 +9,11 @@ function isImage(file: File): boolean {
   return !!fileExtension && allowedExtensions.includes(fileExtension);
 }
 
-
 export default function Upload () {
   const [file, setFile] = useState<File | null>(null)
+  const [progress, setProgress] = useState<number>(0)
 
-  function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
 
     if (!file) {
@@ -24,8 +24,30 @@ export default function Upload () {
       alert('File is not an image')
       setFile(null)
       return
-    } else {
-      setFile(file)
+    }
+
+    setFile(file)
+    const { name, type } = file || {}
+    try {
+      const res = await fetch(`/api/upload?file=${name}&fileType=${type}`)
+      const { url } = await res.json()
+  
+      const upload = await fetch(url, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': type
+        }
+      })
+
+      if (!upload.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const s3url = `https://image-uploader-devchallenges.s3.sa-east-1.amazonaws.com/${name}`
+      console.log(s3url)
+    } catch (err) {
+      console.log(err)
     }
   }
 
