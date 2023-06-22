@@ -15,12 +15,8 @@ export default function Upload () {
   async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
     const uploadedFile = e.target.files?.[0]
 
-    if (!file) {
+    if (!file || !isImage(file)) {
       alert('No file selected')
-      setFile(null)
-      return
-    } else if (!isImage(file)) {
-      alert('File is not an image')
       setFile(null)
       return
     }
