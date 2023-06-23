@@ -9,54 +9,49 @@ function isImage(file: File): boolean {
   return !!fileExtension && allowedExtensions.includes(fileExtension);
 }
 
+function validFile (file: any): boolean | undefined {
+  if (!file || !isImage(file)) {
+    alert('Invalid file type')
+    return false
+  }
+  return true
+}
+
+async function uploadImage (file: any) {
+  const { name } = file
+  const res = await fetch(`/api/upload?file=${name}`)
+  const { url } = await res.json()
+
+  await fetch(url, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export default function Upload () {
   const [file, setFile] = useState<any>(null)
 
   async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
     const uploadedFile = e.target.files?.[0]
+    validFile(uploadedFile) ? setFile(uploadedFile) : setFile(null)
+    await uploadImage(file)
+  }
 
-    if (!file || !isImage(file)) {
-      alert('No file selected')
-      setFile(null)
-      return
-    }
+  async function handleDrop (e: React.DragEvent<HTMLLabelElement>) {
+    e.preventDefault()
+    e.stopPropagation()
 
-    setFile(uploadedFile)
-    const { name } = file || {}
-    const res = await fetch(`/api/upload?file=${name}`)
-    const { url } = await res.json()
-  
-    await fetch(url, {
-      method: 'PUT',
-      body: file,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    const uploadedFile = e.dataTransfer.files?.[0]
+    validFile(uploadedFile) ? setFile(uploadedFile) : setFile(null)
+    await uploadImage(file)
   }
 
   function handleDrag (e: React.DragEvent<HTMLLabelElement>) {
     e.preventDefault()
     e.stopPropagation()
-  }
-
-  function handleDrop (e: React.DragEvent<HTMLLabelElement>) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    const file = e.dataTransfer.files?.[0]
-    
-    if (!file) {
-      alert('No file selected')
-      setFile(null)
-      return
-    } else if (!isImage(file)) {
-      alert('File is not an image')
-      setFile(null)
-      return
-    } else {
-      setFile(file)
-    }
   }
 
   return (
@@ -67,7 +62,7 @@ export default function Upload () {
         <DragAndDropBox />
       </label>
       <small className="text-[#808080] my-6">Or</small>
-      <label className="rounded-lg bg-[#09f] text-white py-2 px-3 text-sm">
+      <label className="rounded-lg bg-[#09f] text-white py-2 px-3 text-sm cursor-pointer">
         Choose file
         <input onChange={handleUpload} id="file_upload" type="file" className="hidden" accept='image/*'/>
       </label>
