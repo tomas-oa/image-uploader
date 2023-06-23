@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import CheckIcon from './CheckIcon'
+import CopyToClipboard from './CopyToClipboard'
 
 interface Props {
   url: string
@@ -24,14 +25,7 @@ export default function ShowImage ({ url }: Props) {
             height={224}
           />
         </figure>
-        <div>   
-          <div className="relative">
-            <div className="block min-w-full p-2 py-4 text-sm text-[#4F4F4F] border border-[#E0E0E0] rounded-xl bg-[#F6F8FB]">
-              <p className='truncate w-[215px]'>{`${BASE_URL}${url}`}</p>
-            </div>
-            <button className="text-white absolute right-1 bottom-1 bg-[#2F80ED] font-medium rounded-xl text-sm px-5 py-3.5">Copy Link</button>
-          </div>
-        </div>
+        <CopyToClipboard url={url} />
       </div>
     </main>
   )

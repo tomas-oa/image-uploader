@@ -1,0 +1,35 @@
+"use client"
+import { useRef } from "react"
+
+interface Props {
+  url: string
+}
+
+export default function CopyToClipboard ({ url }: Props) {
+  const BASE_URL = "https://image-uploader-devchallenges.s3.sa-east-1.amazonaws.com/"
+  const urlRef = useRef<HTMLParagraphElement>(null)
+
+  const copyUrlToClipboard = () => {
+    const text = urlRef.current
+
+    if (text != null) {
+      navigator.clipboard.writeText(text.innerText)
+        .then(() => {
+          alert('Copied to clipboard')
+        })
+        .catch((err) => {
+          alert('Failed to copy to clipboard')
+        }
+      )
+    }
+  }
+    
+  return (
+    <div className="relative">
+      <div className="block min-w-full p-2 py-4 text-sm text-[#4F4F4F] border border-[#E0E0E0] rounded-xl bg-[#F6F8FB]">
+        <p ref={urlRef} className='truncate w-[215px]'>{`${BASE_URL}${url}`}</p>
+      </div>
+      <button className="text-white absolute right-1 bottom-1 bg-[#2F80ED] font-medium rounded-xl text-sm px-5 py-3.5" onClick={copyUrlToClipboard}>Copy Link</button>
+    </div>
+  )
+}

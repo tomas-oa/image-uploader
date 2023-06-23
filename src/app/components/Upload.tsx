@@ -37,8 +37,8 @@ async function uploadImage (file: any) {
 
 export default function Upload () {
   const [file, setFile] = useState<any>(null)
-  const [uploaded, setUploaded] = useState<boolean>(false)
-  const [url, setUrl] = useState<string>("https://")
+  const [uploaded, setUploaded] = useState<boolean>(true)
+  const [url, setUrl] = useState<string>("")
 
   async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
     const uploadedFile = e.target.files?.[0]
