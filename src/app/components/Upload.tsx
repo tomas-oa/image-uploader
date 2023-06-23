@@ -25,6 +25,7 @@ export default function Upload () {
     e.stopPropagation()
   }
 
+  
   return (
     uploaded 
       ? <ShowImage url={url} />

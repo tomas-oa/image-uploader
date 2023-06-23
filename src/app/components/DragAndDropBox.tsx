@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function DragAndDropBox () {
   return (
-    <div className="border border-[#a4c6f6] border-dashed min-w-[338px] min-h-[218px] rounded-md mt-8 bg-[#f6f8fb] flex flex-col items-center justify-center cursor-pointer">
+    <div className="border border-[#97BEF4] border-dashed min-w-[338px] min-h-[218px] rounded-md mt-8 bg-[#F6F8FB] flex flex-col items-center justify-center cursor-pointer">
       <figure className="flex flex-col items-center justify-center">
         <Image 
           src='/image.svg'
