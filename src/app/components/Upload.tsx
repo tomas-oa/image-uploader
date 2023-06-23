@@ -36,27 +36,29 @@ async function uploadImage (file: any) {
 }
 
 export default function Upload () {
-  const [file, setFile] = useState<any>(null)
-  const [uploaded, setUploaded] = useState<boolean>(true)
+  const [uploaded, setUploaded] = useState<boolean>(false)
   const [url, setUrl] = useState<string>("")
 
   async function handleUpload (e: React.ChangeEvent<HTMLInputElement>) {
     const uploadedFile = e.target.files?.[0]
-    validFile(uploadedFile) ? setFile(uploadedFile) : setFile(null)
-    const { response, name } = await uploadImage(file)
-    setUploaded(response)
-    setUrl(name)
+
+    if (validFile(uploadedFile)) {
+      const { response, name } = await uploadImage(uploadedFile)
+      setUploaded(response)
+      setUrl(name)
+    }
   }
 
   async function handleDrop (e: React.DragEvent<HTMLLabelElement>) {
     e.preventDefault()
     e.stopPropagation()
-
     const uploadedFile = e.dataTransfer.files?.[0]
-    validFile(uploadedFile) ? setFile(uploadedFile) : setFile(null)
-    const { response, name } = await uploadImage(file)
-    setUploaded(response)
-    setUrl(name)
+
+    if (validFile(uploadedFile)) {
+      const { response, name } = await uploadImage(uploadedFile)
+      setUploaded(response)
+      setUrl(name)
+    }
   }
 
   function handleDrag (e: React.DragEvent<HTMLLabelElement>) {
