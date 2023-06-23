@@ -16,13 +16,13 @@ export default function ShowImage ({ url }: Props) {
           <CheckIcon />
           <h1 className="text-xl mb-5">Uploaded Successfully!</h1>
         </header>
-        <figure className="min-h-[225px] flex items-center justify-center border border-gray-500 rounded-md mb-8 ">
+        <figure className="max-h-[225px] max-w-[338px] flex items-center justify-center border border-gray-500 rounded-md mb-8">
           <Image
-            className='object-scale-down'
+            className='max-h-[225px] max-w-[338px] object-fit rounded-md'
             src={`${BASE_URL}${url}`}
             alt='Uploaded image'
             width={338}
-            height={224}
+            height={225}
           />
         </figure>
         <CopyToClipboard url={url} />
