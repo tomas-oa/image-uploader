@@ -1,5 +1,6 @@
 "use client"
 import { useRef } from "react"
+import toast, { Toaster } from 'react-hot-toast'
 
 interface Props {
   url: string
@@ -15,10 +16,10 @@ export default function CopyToClipboard ({ url }: Props) {
     if (text != null) {
       navigator.clipboard.writeText(text.innerText)
         .then(() => {
-          alert('Copied to clipboard')
+          toast.success('Copied to clipboard')
         })
-        .catch((err) => {
-          alert('Failed to copy to clipboard')
+        .catch(() => {
+          toast.error('Failed to copy')
         }
       )
     }
@@ -30,6 +31,7 @@ export default function CopyToClipboard ({ url }: Props) {
         <p ref={urlRef} className='truncate w-[215px]'>{`${BASE_URL}${url}`}</p>
       </div>
       <button className="text-white absolute right-2.5 bottom-2.5 bg-[#2F80ED] font-medium rounded-lg text-sm px-4 py-2" onClick={copyUrlToClipboard}>Copy Link</button>
+      <Toaster position="bottom-right" />
     </div>
   )
 }
