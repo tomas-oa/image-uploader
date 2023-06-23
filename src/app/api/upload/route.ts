@@ -16,7 +16,7 @@ export async function GET(req: NextApiRequest) {
     const preSignedUrl = await s3.getSignedUrlPromise("putObject", {
         Bucket: process.env.BUCKET_NAME,
         Key: file,
-        Expires: 60
+        Expires: 60 * 3
     })
 
     return NextResponse.json({ url: preSignedUrl }, { status: 200 })
