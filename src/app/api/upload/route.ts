@@ -1,8 +1,10 @@
 import S3 from 'aws-sdk/clients/s3'
 import { NextRequest, NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 
 export async function GET(req: NextRequest) {
-    const url = new URL(req.url || "", `http://${req.headers.host}`)
+    const headersList = headers()
+    const url = new URL(req.url || "", `http://${headersList.get('host')}`)
     const file = url.searchParams.get('file')
 
     const s3 = new S3({
