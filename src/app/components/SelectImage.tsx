@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import DragAndDropBox from './DragAndDropBox'
 
 interface Props {
