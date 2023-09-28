@@ -8,7 +8,7 @@ interface Props {
 
 export default function SelectImage ({ handleUpload, handleDrag, handleDrop }: Props) {
   return (
-    <main className="min-w-full min-h-full lg:min-w-[402px] lg:min-h-[469px] items-center p-10 rounded-2xl shadow-lg border border-gray-100">
+    <main className="min-w-full min-h-full lg:min-w-[402px] lg:min-h-[469px] items-center p-10 rounded-2xl md:shadow-lg md:border md:border-gray-100">
       <h1 className="text-xl mb-5">Upload your image</h1>
       <small className="text-[#828282] text-xs font-medium"> File should be Jpeg, Png...</small>
       <form className='flex flex-col items-center'>

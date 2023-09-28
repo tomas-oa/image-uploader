@@ -10,7 +10,7 @@ export default function ShowImage ({ url }: Props) {
   const BASE_URL = "https://image-uploader-devchallenges.s3.sa-east-1.amazonaws.com/"
 
   return (
-    <main className="min-w-[418px] min-h-[502px] items-center p-10 rounded-2xl shadow-lg border border-gray-100">
+    <main className="min-w-[418px] min-h-[502px] items-center p-10 md:rounded-2xl md:shadow-lg md:border md:border-gray-100">
       <div className='min-w-[338px]'>
         <header className='h-[77px] flex flex-col items-center text-center'>
           <CheckIcon />
