@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className={`${poppins.className} relative min-h-[dvh]`}>
         {children}
         <Footer />
       </body>
